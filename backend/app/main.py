@@ -101,6 +101,7 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title=settings.APP_NAME,
         description="""
+    
 ## Vietnam Tourism AI Recommender API
 
 Hệ thống tư vấn du lịch Việt Nam sử dụng AI.
@@ -139,7 +140,10 @@ Hệ thống tư vấn du lịch Việt Nam sử dụng AI.
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    
+    @app.get("/")
+    @app.head("/")
+    def health_check():
+        return {"status": "ok", "message": "Vietnam Tourism API is running smoothly!"}
     # ===========================================
     # Include Routers
     # ===========================================
