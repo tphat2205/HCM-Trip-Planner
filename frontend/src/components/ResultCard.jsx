@@ -6,25 +6,25 @@ function normalizeCategory(category) {
   if (!category) return 'Attraction';
   const cat = category.toLowerCase();
   if (cat.includes('hotel')) return 'Hotel';
-  if (cat.includes('dining') || cat.includes('restaurant')) return 'Restaurant';
+  if (cat.includes('dining') || cat.includes('restaurant')) return 'Dining';
   return 'Attraction';
 }
 
 const categoryIcons = {
   Hotel: Hotel,
-  Restaurant: UtensilsCrossed,
+  Dining: UtensilsCrossed,
   Attraction: Camera,
 };
 
 const categoryColors = {
   Hotel: 'bg-blue-500',
-  Restaurant: 'bg-orange-500',
+  Dining: 'bg-orange-500',
   Attraction: 'bg-purple-500',
 };
 
 const categoryLabels = {
   Hotel: 'Khách sạn',
-  Restaurant: 'Nhà hàng',
+  Dining: 'Quán ăn',
   Attraction: 'Địa điểm',
 };
 
@@ -41,7 +41,7 @@ function getPlaceholderImage(category) {
   const normalizedCat = normalizeCategory(category);
   const images = {
     Hotel: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=300&fit=crop',
-    Restaurant: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop',
+    Dining: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop',
     Attraction: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=400&h=300&fit=crop',
   };
   return images[normalizedCat] || images.Attraction;
@@ -60,15 +60,15 @@ export default function ResultCard({ location, onAddToTrip, isInTrip, index }) {
 
   return (
     <motion.div
-      className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
+      className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 flex flex-col h-full group"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: index * 0.05 }}
       whileHover={{ y: -5 }}
       layout
     >
       {/* Image */}
-      <div className="relative h-48 overflow-hidden">
+      <div className="relative h-46 overflow-hidden">
         <motion.img
           src={imageUrl}
           alt={location.name}
@@ -79,7 +79,7 @@ export default function ResultCard({ location, onAddToTrip, isInTrip, index }) {
             e.target.src = getPlaceholderImage(location.category);
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
         
         {/* Category Badge */}
         <div className={`absolute top-3 left-3 ${categoryColor} text-white px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1`}>
@@ -113,7 +113,7 @@ export default function ResultCard({ location, onAddToTrip, isInTrip, index }) {
         </h3>
         
         <div className="flex items-start gap-2 text-gray-500 dark:text-gray-400 text-sm mb-2">
-          <MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" />
+          <MapPin className="h-4 w-4 shrink-0 mt-0.5" />
           <span className="line-clamp-1">{location.address}</span>
         </div>
         
@@ -121,17 +121,17 @@ export default function ResultCard({ location, onAddToTrip, isInTrip, index }) {
         {(location.start_time || location.end_time) && 
          location.start_time !== '-' && location.end_time !== '-' && (
           <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 text-sm mb-2">
-            <Clock className="h-4 w-4 flex-shrink-0" />
+            <Clock className="h-4 w-4 shrink-0" />
             <span>{location.start_time} - {location.end_time}</span>
           </div>
         )}
         
-        {/* Reason (from AI) */}
+        {/* Reason (from Model ML)
         {location.reason && (
           <p className="text-emerald-600 dark:text-emerald-400 text-xs mb-3 italic">
             💡 {location.reason}
           </p>
-        )}
+        )} */}
 
         <div className="flex-1" />
 

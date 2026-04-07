@@ -2,8 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { motion } from 'framer-motion';
-import { Navigation, Maximize2, Minimize2, Route } from 'lucide-react';
+import { Navigation, Maximize2, Minimize2, Route, Wallet, X } from 'lucide-react';
+import { AnimatePresence } from 'framer-motion';
 import 'leaflet/dist/leaflet.css';
+import BudgetSummary from './BudgetSummary';
+
 
 // Fix Leaflet default marker icon issue
 delete L.Icon.Default.prototype._getIconUrl;
@@ -14,7 +17,7 @@ L.Icon.Default.mergeOptions({
 });
 
 // Ho Chi Minh City bounds and center
-const HCM_CENTER = [10.8231, 106.6297];
+const HCM_CENTER = [10.7769, 106.7009];
 const HCM_BOUNDS = [
   [10.65, 106.35], // Southwest
   [11.15, 106.95], // Northeast
@@ -202,12 +205,11 @@ function RouteLayer({ locations, showRoute }) {
 }
 
 export default function TravelMap({ locations, selectedLocation, onLocationSelect }) {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [showRoute, setShowRoute] = useState(false);
-  
+  const [showBudget, setShowBudget] = useState(false);
   // Process locations to add coordinates
   const processedLocations = locations.map((loc, index) => {
-    // Priority 1: Use exact coordinates from backend (Goong.io geocoding)
+    // Priority 1: Use exact coordinates from backend (geocoding)
     if (loc.latitude && loc.longitude) {
       return { ...loc, lat: loc.latitude, lng: loc.longitude };
     }
@@ -221,29 +223,25 @@ export default function TravelMap({ locations, selectedLocation, onLocationSelec
     return { ...loc, lat, lng };
   });
 
-  if (locations.length === 0) {
-    return (
-      <motion.div
-        className={`relative rounded-2xl overflow-hidden shadow-lg bg-gray-100 dark:bg-gray-800 ${
-          isExpanded ? 'h-[600px]' : 'h-[400px]'
-        }`}
-        layout
-      >
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-gray-500 dark:text-gray-400">
-            <Navigation className="h-12 w-12 mx-auto mb-3 opacity-50" />
-            <p>Thêm địa điểm vào hành trình để xem bản đồ</p>
-          </div>
-        </div>
-      </motion.div>
-    );
-  }
+  // if (locations.length === 0) {
+  //   return (
+  //     <motion.div
+  //       className={`relative rounded-2xl overflow-hidden shadow-lg bg-gray-100 dark:bg-gray-800 h-full`}
+  //       layout
+  //     >
+  //       <div className="absolute inset-0 flex items-center justify-center">
+  //         <div className="text-center text-gray-500 dark:text-gray-400">
+  //           <Navigation className="h-12 w-12 mx-auto mb-3 opacity-50" />
+  //           <p>Thêm địa điểm vào hành trình để xem bản đồ</p>
+  //         </div>
+  //       </div>
+  //     </motion.div>
+  //   );
+  // }
 
   return (
     <motion.div
-      className={`relative rounded-2xl overflow-hidden shadow-lg ${
-        isExpanded ? 'h-[600px]' : 'h-[400px]'
-      }`}
+      className="relative rounded-2xl overflow-hidden shadow-lg h-full"
       layout
       transition={{ duration: 0.3 }}
     >
@@ -273,7 +271,7 @@ export default function TravelMap({ locations, selectedLocation, onLocationSelec
               }}
             >
               <Popup>
-                <div className="min-w-[200px]">
+                <div className="min-w-50">
                   <h3 className="font-bold text-gray-800 mb-1">{location.name}</h3>
                   <p className="text-xs text-gray-500 mb-2">{location.address}</p>
                   <div className="flex items-center justify-between">
@@ -292,21 +290,7 @@ export default function TravelMap({ locations, selectedLocation, onLocationSelec
       </MapContainer>
       
       {/* Map Controls */}
-      <div className="absolute top-4 right-4 flex flex-col gap-2 z-[1000]">
-        <motion.button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="p-2 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          title={isExpanded ? 'Thu nhỏ' : 'Mở rộng'}
-        >
-          {isExpanded ? (
-            <Minimize2 className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-          ) : (
-            <Maximize2 className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-          )}
-        </motion.button>
-        
+      <div className="absolute top-4 right-4 flex flex-col gap-2 z-1000">
         <motion.button
           onClick={() => setShowRoute(!showRoute)}
           className={`p-2 rounded-lg shadow-md hover:shadow-lg transition-all ${
@@ -320,19 +304,56 @@ export default function TravelMap({ locations, selectedLocation, onLocationSelec
         >
           <Route className="h-5 w-5" />
         </motion.button>
+
+        <motion.button
+          onClick={() => setShowBudget(true)}
+          className="p-2 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all text-gray-600 dark:text-gray-300 hover:text-emerald-500"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          title="Ước tính ngân sách"
+        >
+          <Wallet className="h-5 w-5" />
+        </motion.button>
+
+        <AnimatePresence>
+          {showBudget && (
+            <motion.div
+              className="absolute inset-0 z-2000 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <div className="relative w-full max-w-md">
+                {/* Nút đóng popup */}
+                <button 
+                  onClick={() => setShowBudget(false)}
+                  className="absolute -top-3 -right-3 z-10 p-2 bg-white dark:bg-gray-800 rounded-full shadow-lg text-gray-500 hover:text-red-500 transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+                
+                {/* Hiển thị BudgetSummary bên trong */}
+                <div className="max-h-[80vh] overflow-y-auto rounded-2xl no-scrollbar">
+                  <BudgetSummary itinerary={itinerary} />
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
       </div>
       
       {/* Map Title */}
-      <div className="absolute top-4 left-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-md px-3 py-1.5 z-[1000]">
+      <div className="absolute top-4 left-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-md px-3 py-1.5 z-1000">
         <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-          📍 TP. Hồ Chí Minh
+          TP. Hồ Chí Minh
         </span>
       </div>
       
       {/* Route Info */}
       {showRoute && processedLocations.length > 1 && (
         <motion.div
-          className="absolute bottom-4 left-4 bg-white dark:bg-gray-800 rounded-lg shadow-md px-4 py-2 z-[1000]"
+          className="absolute bottom-4 left-4 bg-white dark:bg-gray-800 rounded-lg shadow-md px-4 py-2 z-1000"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >

@@ -18,7 +18,6 @@ export default function FilterPanel({ onFiltersChange, isLoading }) {
         setDistricts(data);
       } catch (error) {
         console.error('Failed to fetch districts:', error);
-        // Fallback districts for HCM
         setDistricts([
           'Quận 1', 'Quận 3', 'Quận 4', 'Quận 5', 'Quận 6', 'Quận 7', 
           'Quận 8', 'Quận 10', 'Quận 11', 'Quận 12', 'Quận Bình Thạnh',
@@ -34,7 +33,7 @@ export default function FilterPanel({ onFiltersChange, isLoading }) {
   useEffect(() => {
     onFiltersChange({
       districts: selectedDistricts,
-      minPrice: null,  // Always null - only use maxPrice
+      minPrice: null,  
       maxPrice: maxPrice ? parseFloat(maxPrice) : null,
     });
   }, [selectedDistricts, maxPrice]);
@@ -54,7 +53,6 @@ export default function FilterPanel({ onFiltersChange, isLoading }) {
 
   const hasFilters = selectedDistricts.length > 0 || maxPrice;
 
-  // Price presets (VND) - only max price
   const pricePresets = [
     { label: 'Dưới 100K', max: 100000 },
     { label: 'Dưới 500K', max: 500000 },
@@ -68,20 +66,23 @@ export default function FilterPanel({ onFiltersChange, isLoading }) {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto mb-6">
+    <div className="relative">
       {/* Toggle Button */}
       <motion.button
-        onClick={() => setIsOpen(!isOpen)}
+        type="button"
+        onClick={(e) => {
+          e.preventDefault(); 
+          setIsOpen(!isOpen);
+        }}
         className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
           isOpen || hasFilters
             ? 'bg-emerald-500 text-white shadow-lg'
-            : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-emerald-500'
+            : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
         }`}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
         <Filter className="h-4 w-4" />
-        <span>Bộ lọc</span>
         {hasFilters && (
           <span className="bg-white/20 px-2 py-0.5 rounded-full text-xs">
             {selectedDistricts.length + (maxPrice ? 1 : 0)}
@@ -94,11 +95,12 @@ export default function FilterPanel({ onFiltersChange, isLoading }) {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="mt-4 p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700"
-            initial={{ opacity: 0, y: -20, height: 0 }}
-            animate={{ opacity: 1, y: 0, height: 'auto' }}
-            exit={{ opacity: 0, y: -20, height: 0 }}
-            transition={{ duration: 0.3 }}
+            className="absolute top-[calc(100%+16px)] right-0 z-2000 w-[calc(100vw-32px)] sm:w-125 p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 cursor-default"
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
@@ -106,6 +108,7 @@ export default function FilterPanel({ onFiltersChange, isLoading }) {
               </h3>
               {hasFilters && (
                 <motion.button
+                  type="button" /* ĐÃ THÊM: type="button" */
                   onClick={clearFilters}
                   className="flex items-center gap-1 text-sm text-red-500 hover:text-red-600 transition-colors"
                   whileHover={{ scale: 1.02 }}
@@ -125,9 +128,9 @@ export default function FilterPanel({ onFiltersChange, isLoading }) {
                   Quận / Huyện
                 </label>
                 
-                {/* District Dropdown */}
                 <div className="relative">
                   <button
+                    type="button" /* ĐÃ THÊM: type="button" */
                     onClick={() => setIsDistrictDropdownOpen(!isDistrictDropdownOpen)}
                     className="w-full px-4 py-3 text-left bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                   >
@@ -151,6 +154,7 @@ export default function FilterPanel({ onFiltersChange, isLoading }) {
                       >
                         {districts.map((district) => (
                           <button
+                            type="button" /* ĐÃ THÊM: type="button" */
                             key={district}
                             onClick={() => toggleDistrict(district)}
                             className={`w-full px-4 py-2 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
@@ -170,7 +174,6 @@ export default function FilterPanel({ onFiltersChange, isLoading }) {
                   </AnimatePresence>
                 </div>
 
-                {/* Selected Districts Tags */}
                 {selectedDistricts.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-3">
                     {selectedDistricts.map((district) => (
@@ -183,6 +186,7 @@ export default function FilterPanel({ onFiltersChange, isLoading }) {
                       >
                         {district}
                         <button
+                          type="button" /* ĐÃ THÊM: type="button" */
                           onClick={() => toggleDistrict(district)}
                           className="hover:text-emerald-900 dark:hover:text-emerald-100"
                         >
@@ -194,17 +198,17 @@ export default function FilterPanel({ onFiltersChange, isLoading }) {
                 )}
               </div>
 
-              {/* Budget Filter - Only Max Budget */}
+              {/* Budget Filter */}
               <div>
                 <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                   <DollarSign className="h-4 w-4 text-emerald-500" />
                   Ngân sách tối đa (VNĐ)
                 </label>
 
-                {/* Budget Presets */}
                 <div className="flex flex-wrap gap-2 mb-3">
                   {pricePresets.map((preset) => (
                     <button
+                      type="button" /* ĐÃ THÊM: type="button" */
                       key={preset.label}
                       onClick={() => applyPricePreset(preset)}
                       className={`px-3 py-1 text-xs rounded-full border transition-all ${
@@ -218,7 +222,6 @@ export default function FilterPanel({ onFiltersChange, isLoading }) {
                   ))}
                 </div>
 
-                {/* Max Budget Input */}
                 <div className="relative">
                   <input
                     type="number"
@@ -229,6 +232,7 @@ export default function FilterPanel({ onFiltersChange, isLoading }) {
                   />
                   {maxPrice && (
                     <button
+                      type="button" /* ĐÃ THÊM: type="button" */
                       onClick={() => setMaxPrice('')}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                     >
@@ -237,7 +241,6 @@ export default function FilterPanel({ onFiltersChange, isLoading }) {
                   )}
                 </div>
 
-                {/* Budget Display */}
                 {maxPrice && (
                   <p className="mt-2 text-sm text-emerald-600 dark:text-emerald-400 font-medium">
                     Ngân sách: tối đa {parseInt(maxPrice).toLocaleString()} VNĐ
