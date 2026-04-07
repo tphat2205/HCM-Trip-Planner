@@ -110,11 +110,11 @@ function App() {
               }
             />
             
-            {selectedCity && (
+            {/* {selectedCity && (
               <div className="flex flex-wrap gap-4 items-center">
                 <WeatherDisplay city={selectedCity} />
               </div>
-            )}
+            )} */}
           </div>
 
           {/* Vùng danh sách */}
