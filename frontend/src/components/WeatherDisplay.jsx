@@ -67,13 +67,14 @@ export default function WeatherDisplay({ city, attractions = [] }) {
     );
   }
 
-  if (error || !weather) return null;
+  if (error || !weather || !weather.data) return null;
 
-  const WeatherIcon = weatherIcons[weather.icon] || Cloud;
-  const gradientClass = weatherColors[weather.condition] || weatherColors['Unknown'];
+  const weatherData = weather.data;
+  const WeatherIcon = weatherIcons[weatherData.icon] || Cloud;
+  const gradientClass = weatherColors[weatherData.description] || weatherColors['Unknown'];
   
   // Check if it's rainy and user has outdoor attractions
-  const isRainy = weather.condition === 'Rainy';
+  const isRainy = weatherData.description?.toLowerCase().includes('rain') || !weatherData.is_outdoor_friendly;
   const hasOutdoorAttractions = attractions.some(a => a.category === 'Attraction');
   const showWarning = isRainy && hasOutdoorAttractions;
 
@@ -93,7 +94,7 @@ export default function WeatherDisplay({ city, attractions = [] }) {
         <div className="flex items-start justify-between mb-4">
           <div>
             <h3 className="text-lg font-semibold opacity-90">Thời tiết</h3>
-            <p className="text-2xl font-bold">{weather.city}</p>
+            <p className="text-2xl font-bold">{weatherData.city}</p>
           </div>
           <motion.div
             animate={{ rotate: [0, 10, -10, 0] }}
@@ -105,19 +106,19 @@ export default function WeatherDisplay({ city, attractions = [] }) {
         
         {/* Temperature */}
         <div className="flex items-end gap-4 mb-4">
-          <div className="text-5xl font-bold">{weather.temp}°C</div>
-          <div className="text-lg opacity-90 pb-1">{weather.condition}</div>
+          <div className="text-5xl font-bold">{weatherData.temperature}°C</div>
+          <div className="text-lg opacity-90 pb-1">{weatherData.description}</div>
         </div>
         
         {/* Details */}
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
             <Thermometer className="h-5 w-5 opacity-75" />
-            <span>Cảm giác: {weather.temp + (weather.humidity > 70 ? 2 : 0)}°C</span>
+            <span>Cảm giác: {weatherData.feels_like}°C</span>
           </div>
           <div className="flex items-center gap-2">
             <Droplets className="h-5 w-5 opacity-75" />
-            <span>Độ ẩm: {weather.humidity}%</span>
+            <span>Độ ẩm: {weatherData.humidity}%</span>
           </div>
         </div>
         

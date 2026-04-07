@@ -45,7 +45,7 @@ function App() {
         ...(data.attractions || [])
       ];
       if (allLocations.length > 0) {
-        setSelectedCity('Hồ Chí Minh'); 
+        setSelectedCity('Ho Chi Minh'); 
       }
     } catch (err) {
       setError(err.message || 'Có lỗi xảy ra khi tìm kiếm. Vui lòng thử lại.');
