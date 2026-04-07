@@ -1,6 +1,6 @@
 """Models module - Pydantic schemas."""
 
-from models.schemas import (
+from app.models.schemas import (
     RecommendationRequest,
     RecommendationResponse,
     PlaceItem,

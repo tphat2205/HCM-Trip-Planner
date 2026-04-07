@@ -7,7 +7,6 @@ Uses Pydantic BaseSettings for environment variable management.
 from pydantic_settings import BaseSettings
 from typing import List
 from pathlib import Path
-import os
 
 
 class Settings(BaseSettings):
@@ -32,7 +31,7 @@ class Settings(BaseSettings):
     
     # Paths
     BASE_DIR: Path = Path(__file__).resolve().parent.parent
-    CHECKPOINT_DIR: Path = BASE_DIR.parent / "checkpoints"
+    CHECKPOINT_DIR: Path = BASE_DIR / "artifacts"
     PUBLIC_DIR: Path = BASE_DIR / "public"
     MODEL_PREFIX: str = "vietnam_tourism"
     
@@ -45,7 +44,7 @@ class Settings(BaseSettings):
     FETCH_MULTIPLIER: int = 5  # Fetch 5x candidates for filtering buffer
     
     class Config:
-        env_file = ".env"
+        env_file = str(Path(__file__).resolve().parents[2] / ".env")
         env_file_encoding = "utf-8"
         extra = "ignore"
 

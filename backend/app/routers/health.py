@@ -5,9 +5,9 @@ Provides system status information.
 """
 
 from fastapi import APIRouter, Depends
-from models.schemas import HealthResponse
-from core.config import settings
-from core.dependencies import get_recommender
+from app.models.schemas import HealthResponse
+from app.core.config import settings
+from app.core.dependencies import get_recommender
 
 router = APIRouter(tags=["Health"])
 

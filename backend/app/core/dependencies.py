@@ -16,8 +16,8 @@ def init_recommender():
     """Initialize the recommender system at application startup."""
     global _recommender_instance
     
-    from services.recommender import VietnamTourismRecommender
-    from core.config import settings
+    from app.services.recommender import VietnamTourismRecommender
+    from app.core.config import settings
     
     _recommender_instance = VietnamTourismRecommender(
         checkpoint_dir=str(settings.CHECKPOINT_DIR),
@@ -38,8 +38,8 @@ def init_location_service():
     """Initialize the location service at application startup."""
     global _location_service_instance
     
-    from services.geocoding import LocationService
-    from core.config import settings
+    from app.services.geocoding import LocationService
+    from app.core.config import settings
     
     _location_service_instance = LocationService(
         json_path=settings.PUBLIC_DIR / "map_locations.json"

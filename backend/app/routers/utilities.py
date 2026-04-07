@@ -7,8 +7,8 @@ Provides additional services like weather.
 from fastapi import APIRouter, Query
 from typing import Optional
 
-from models.schemas import WeatherRequest, WeatherResponse, WeatherInfo
-from services.weather import weather_service
+from app.models.schemas import WeatherRequest, WeatherResponse, WeatherInfo
+from app.services.weather import weather_service
 
 router = APIRouter(prefix="/api", tags=["Utilities"])
 

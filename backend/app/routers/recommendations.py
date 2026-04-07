@@ -9,12 +9,12 @@ from typing import List, Optional
 import uuid
 import re
 
-from models.schemas import (
+from app.models.schemas import (
     RecommendationRequest, 
     RecommendationResponse,
     PlaceItem,
 )
-from core.dependencies import get_recommender, get_location_service
+from app.core.dependencies import get_recommender, get_location_service
 
 router = APIRouter(prefix="/api", tags=["Recommendations"])
 

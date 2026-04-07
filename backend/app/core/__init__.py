@@ -1,7 +1,7 @@
 """Core module - Configuration and dependencies."""
 
-from core.config import settings
-from core.dependencies import (
+from app.core.config import settings
+from app.core.dependencies import (
     init_recommender,
     get_recommender,
     init_location_service,

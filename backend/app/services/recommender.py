@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Optional, List, Dict, Any
 import pandas as pd
 
-from services.ml_components import ContentBasedFilter, LearningToRankDataset
+from app.services.ml_components import ContentBasedFilter, LearningToRankDataset
 
 
 class VietnamTourismRecommender:

@@ -6,7 +6,7 @@ Provides current weather data for travel planning.
 
 import httpx
 from typing import Optional, Dict, Any
-from core.config import settings
+from app.core.config import settings
 
 
 class WeatherService:

@@ -26,7 +26,7 @@ import sys
 # BEFORE any pickle loading happens.
 # =============================================================================
 
-from services.ml_components import ContentBasedFilter, LearningToRankDataset
+from app.services.ml_components import ContentBasedFilter, LearningToRankDataset
 
 # Inject classes into __main__ namespace so pickle can find them
 sys.modules['__main__'].ContentBasedFilter = ContentBasedFilter
@@ -37,9 +37,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
-from core.config import settings
-from core.dependencies import init_recommender, init_location_service
-from routers import health, recommendations, utilities
+from app.core.config import settings
+from app.core.dependencies import init_recommender, init_location_service
+from app.routers import health, recommendations, utilities
 
 
 @asynccontextmanager
