@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Plane, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Navigation } from 'lucide-react';
+import { Navigation, Info } from 'lucide-react';
 import SearchBar from './components/SearchBar';
 import FilterPanel from './components/FilterPanel';
+import AboutModal from './components/AboutModal';
 import ResultCard, { ResultCardSkeleton } from './components/ResultCard';
 import TravelMap from './components/TravelMap';
 import WeatherDisplay from './components/WeatherDisplay';
@@ -11,7 +12,7 @@ import { getRecommendations } from './api';
 
 function App() {
   const [results, setResults] = useState(null);
-  // KHÔI PHỤC STATE: Dùng để lưu những địa điểm người dùng chủ động chọn lên bản đồ
+  const [showAbout, setShowAbout] = useState(false);
   const [selectedLocations, setSelectedLocations] = useState([]); 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -86,7 +87,19 @@ function App() {
               Vietnam Travel Planner
             </h1>
           </div>
-          
+          {/* Khu vực công cụ bên phải */}
+          <div className="flex items-center gap-2">
+            {/* Nút Về dự án */}
+            <button
+              onClick={() => setShowAbout(true)}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-full transition-colors"
+            >
+              <Info className="h-4 w-4" />
+              <span className="hidden sm:inline">Về dự án</span>
+            </button>
+
+            {/* Dành chỗ cho Nút Dark Mode (sẽ thêm sau) */}
+          </div>
         </div>
       </header>
 
@@ -198,8 +211,9 @@ function App() {
             </div>
           )}
         </div>
-        
       </main>
+
+      <AboutModal isOpen={showAbout} onClose={() => setShowAbout(false)} />
     </div>
   );
 }
