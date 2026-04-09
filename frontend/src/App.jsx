@@ -87,10 +87,6 @@ function App() {
             </h1>
           </div>
           
-          <div className="hidden sm:flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-full">
-            <Sparkles className="h-4 w-4 text-amber-500" />
-            <span>Powered by CBF & XGBoost</span>
-          </div>
         </div>
       </header>
 
@@ -195,8 +191,10 @@ function App() {
 
           {/* HIỂN THỊ THỜI TIẾT NỔI LÊN TRÊN MAP */}
           {selectedCity && (
-            <div className="absolute top-4 left-4 z-[2000] w-72 md:w-80 shadow-2xl rounded-2xl pointer-events-auto">
-              <WeatherDisplay city={selectedCity} attractions={allResults} />
+            <div className="absolute top-4 left-13 z-1000 pointer-events-none">
+              <div className="pointer-events-auto">
+                <WeatherDisplay city={selectedCity} attractions={allResults} />
+              </div>
             </div>
           )}
         </div>

@@ -342,11 +342,11 @@ export default function TravelMap({ locations, itinerary = [], selectedLocation,
         )}
       </AnimatePresence>
       {/* Map Title */}
-      <div className="absolute top-4 left-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-md px-3 py-1.5 z-1000">
+      {/* <div className="absolute top-4 left-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-md px-3 py-1.5 z-1000">
         <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
           TP. Hồ Chí Minh
         </span>
-      </div>
+      </div> */}
       
       {/* Route Info */}
       {showRoute && processedLocations.length > 1 && (
