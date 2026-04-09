@@ -192,6 +192,13 @@ function App() {
             itinerary={selectedLocations}
             onLocationSelect={(loc) => console.log('Selected:', loc)}
           />
+
+          {/* HIỂN THỊ THỜI TIẾT NỔI LÊN TRÊN MAP */}
+          {selectedCity && (
+            <div className="absolute top-4 left-4 z-[2000] w-72 md:w-80 shadow-2xl rounded-2xl pointer-events-auto">
+              <WeatherDisplay city={selectedCity} attractions={allResults} />
+            </div>
+          )}
         </div>
         
       </main>

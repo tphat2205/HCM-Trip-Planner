@@ -204,7 +204,7 @@ function RouteLayer({ locations, showRoute }) {
   return null;
 }
 
-export default function TravelMap({ locations, selectedLocation, onLocationSelect }) {
+export default function TravelMap({ locations, itinerary = [], selectedLocation, onLocationSelect }) {
   const [showRoute, setShowRoute] = useState(false);
   const [showBudget, setShowBudget] = useState(false);
   // Process locations to add coordinates
@@ -315,34 +315,32 @@ export default function TravelMap({ locations, selectedLocation, onLocationSelec
           <Wallet className="h-5 w-5" />
         </motion.button>
 
-        <AnimatePresence>
-          {showBudget && (
-            <motion.div
-              className="absolute inset-0 z-2000 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <div className="relative w-full max-w-md">
-                {/* Nút đóng popup */}
-                <button 
-                  onClick={() => setShowBudget(false)}
-                  className="absolute -top-3 -right-3 z-10 p-2 bg-white dark:bg-gray-800 rounded-full shadow-lg text-gray-500 hover:text-red-500 transition-colors"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-                
-                {/* Hiển thị BudgetSummary bên trong */}
-                <div className="max-h-[80vh] overflow-y-auto rounded-2xl no-scrollbar">
-                  <BudgetSummary itinerary={itinerary} />
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
       </div>
-      
+      <AnimatePresence>
+        {showBudget && (
+          <motion.div
+            className="absolute inset-0 z-2000 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div className="relative w-full max-w-md">
+              {/* Nút đóng popup */}
+              <button 
+                onClick={() => setShowBudget(false)}
+                className="absolute -top-3 -right-3 z-10 p-2 bg-white dark:bg-gray-800 rounded-full shadow-lg text-gray-500 hover:text-red-500 transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+              
+              {/* Hiển thị BudgetSummary bên trong */}
+              <div className="max-h-[80vh] overflow-y-auto rounded-2xl no-scrollbar">
+                <BudgetSummary itinerary={itinerary.length > 0 ? itinerary : locations} />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* Map Title */}
       <div className="absolute top-4 left-12 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-md px-3 py-1.5 z-1000">
         <span className="text-sm font-medium text-gray-700 dark:text-gray-300">

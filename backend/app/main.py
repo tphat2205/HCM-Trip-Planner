@@ -1,8 +1,7 @@
 """
-Vietnam Tourism AI Recommender - FastAPI Application
+Vietnam Tourism Recommender - FastAPI Application
 
 Entry point for the application.
-Clean architecture following SOLID principles.
 
 Structure:
 - main.py          : Application entry point (this file)
@@ -13,18 +12,6 @@ Structure:
 """
 
 import sys
-
-# =============================================================================
-# CRITICAL: Pickle Deserialization Fix
-# =============================================================================
-# When the Jupyter notebook saved the model with joblib.dump(), it saved
-# references to classes in __main__ (the notebook's namespace).
-# When we load with joblib.load(), Python tries to find these classes
-# in __main__ of THIS script - which doesn't have them.
-#
-# Solution: Import the classes and inject them into __main__'s namespace
-# BEFORE any pickle loading happens.
-# =============================================================================
 
 from app.services.ml_components import ContentBasedFilter, LearningToRankDataset
 
@@ -61,33 +48,31 @@ async def lifespan(app: FastAPI):
     
     try:
         # Load ML models
-        print("\n📦 Loading ML models...")
+        print("\nLoading ML models...")
         init_recommender()
-        print("✅ ML models loaded successfully!")
+        print("ML models loaded successfully!")
         
         # Load location service
         print("\n📍 Loading location service...")
         init_location_service()
-        print("✅ Location service loaded successfully!")
+        print("Location service loaded successfully!")
         
         print("\n" + "=" * 60)
-        print("🎉 Application ready to serve requests!")
-        print(f"📖 API Docs: http://{settings.HOST}:{settings.PORT}/docs")
+        print("Application ready to serve requests!")
         print("=" * 60 + "\n")
         
     except FileNotFoundError as e:
-        print(f"\n❌ Model files not found: {e}")
-        print("💡 Hint: Make sure checkpoint files exist in 'backend/checkpoints/'")
+        print(f"\nModel files not found: {e}")
         raise e
     except Exception as e:
-        print(f"\n❌ Failed to start application: {e}")
+        print(f"\nFailed to start application: {e}")
         raise e
     
     yield
     
     # ==================== SHUTDOWN ====================
     print("\n" + "=" * 60)
-    print("👋 Shutting down Vietnam Tourism AI Recommender...")
+    print("Shutting down Vietnam Tourism Recommender...")
     print("=" * 60 + "\n")
 
 
@@ -102,17 +87,17 @@ def create_app() -> FastAPI:
         title=settings.APP_NAME,
         description="""
     
-## Vietnam Tourism AI Recommender API
+## Vietnam Tourism Recommender API
 
 Hệ thống tư vấn du lịch Việt Nam sử dụng AI.
 
 ### Tính năng chính:
-- 🔍 **Smart Search**: Tìm kiếm địa điểm bằng ngôn ngữ tự nhiên
-- 🏨 **Hotel Recommendations**: Gợi ý khách sạn phù hợp nhất
-- 🍜 **Dining Suggestions**: Gợi ý quán ăn địa phương
-- 🏛️ **Attractions**: Gợi ý điểm tham quan
-- 🗺️ **Coordinates**: Tọa độ cho hiển thị bản đồ
-- 🌤️ **Weather**: Thông tin thời tiết
+- **Smart Search**: Tìm kiếm địa điểm bằng ngôn ngữ tự nhiên
+- **Hotel Recommendations**: Gợi ý khách sạn phù hợp nhất
+- **Dining Suggestions**: Gợi ý quán ăn địa phương
+- **Attractions**: Gợi ý điểm tham quan
+- **Coordinates**: Tọa độ cho hiển thị bản đồ
+- **Weather**: Thông tin thời tiết
 
 ### ML Pipeline:
 1. **Stage 1 (Retrieval)**: TF-IDF Content-Based Filtering → Top 100 candidates
@@ -159,10 +144,7 @@ Hệ thống tư vấn du lịch Việt Nam sử dụng AI.
 # ===========================================
 app = create_app()
 
-
-# ===========================================
 # Development Server
-# ===========================================
 if __name__ == "__main__":
     import uvicorn
     

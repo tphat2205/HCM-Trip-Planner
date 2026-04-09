@@ -33,7 +33,7 @@ class LocationService:
         """Load tọa độ từ file JSON."""
         try:
             if not self.json_path.exists():
-                print(f"⚠️ File không tồn tại: {self.json_path}")
+                print(f"File không tồn tại: {self.json_path}")
                 return
                 
             with open(self.json_path, 'r', encoding='utf-8') as f:
@@ -48,10 +48,10 @@ class LocationService:
                     self.locations[name] = {'lat': lat, 'lng': lng}
                     self._normalized_names[self._normalize_name(name)] = name
             
-            print(f"✅ Đã load {len(self.locations)} địa điểm từ {self.json_path.name}")
+            print(f"Đã load {len(self.locations)} địa điểm từ {self.json_path.name}")
             
         except Exception as e:
-            print(f"❌ Lỗi khi load locations: {e}")
+            print(f"Lỗi khi load locations: {e}")
     
     def get_coordinates(self, place_name: str) -> Optional[Dict[str, float]]:
         """

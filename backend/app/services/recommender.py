@@ -43,32 +43,32 @@ class VietnamTourismRecommender:
 
     def _load_components(self):
         """Nạp các file .pkl vào bộ nhớ."""
-        print("\n🔄 Đang nạp mô hình từ checkpoint...")
+        print("\nĐang nạp mô hình từ checkpoint...")
         try:
             cbf_path = self.checkpoint_dir / f'{self.prefix}_cbf.pkl'
             self.cbf = joblib.load(cbf_path)
-            print(f"  ✅ Loaded: {cbf_path.name}")
+            print(f"  Loaded: {cbf_path.name}")
 
             encoder_path = self.checkpoint_dir / f'{self.prefix}_encoder.pkl'
             self.dataset_builder = joblib.load(encoder_path)
             self.dataset_builder.cbf = self.cbf  # Khôi phục liên kết
-            print(f"  ✅ Loaded: {encoder_path.name}")
+            print(f"  Loaded: {encoder_path.name}")
 
             model_path = self.checkpoint_dir / f'{self.prefix}_xgbranker.pkl'
             self.xgb_model = joblib.load(model_path)
-            print(f"  ✅ Loaded: {model_path.name}")
+            print(f"  Loaded: {model_path.name}")
 
             metadata_path = self.checkpoint_dir / f'{self.prefix}_metadata.pkl'
             self.metadata = joblib.load(metadata_path)
-            print(f"  ✅ Loaded: {metadata_path.name}")
+            print(f"  Loaded: {metadata_path.name}")
             
-            print(f"\n🎉 Tải hệ thống thành công! (Sẵn sàng phục vụ {self.metadata.get('n_items', 0):,} địa điểm)")
+            print(f"\nTải hệ thống thành công! (Sẵn sàng phục vụ {self.metadata.get('n_items', 0):,} địa điểm)")
             
         except FileNotFoundError as e:
-            print(f"❌ File không tìm thấy: {e}")
+            print(f"File không tìm thấy: {e}")
             raise
         except Exception as e:
-            print(f"❌ Lỗi khi nạp mô hình: {str(e)}")
+            print(f"Lỗi khi nạp mô hình: {str(e)}")
             raise
 
     def _extract_district(self, address: str) -> str:
