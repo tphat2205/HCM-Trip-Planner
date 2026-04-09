@@ -95,7 +95,7 @@ export default function SearchBar({ onSearch, isLoading, filterNode }) {
             onChange={(e) => setQuery(e.target.value)}
             placeholder={typingText || 'Nhập yêu cầu của bạn...'}
             onKeyDown={handleKeyDown}
-            className="w-full pl-12 pr-32 py-4 text-lg bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-2xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 outline-none transition-all shadow-lg hover:shadow-xl"
+            className="w-full pl-12 pr-32 py-4 text-lg text-gray-900 dark:text-white bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-2xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 outline-none transition-all shadow-lg hover:shadow-xl"
             disabled={isLoading}
           />
           

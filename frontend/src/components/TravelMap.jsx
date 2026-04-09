@@ -272,13 +272,13 @@ export default function TravelMap({ locations, itinerary = [], selectedLocation,
             >
               <Popup>
                 <div className="min-w-50">
-                  <h3 className="font-bold text-gray-800 mb-1">{location.name}</h3>
-                  <p className="text-xs text-gray-500 mb-2">{location.address}</p>
+                  <h3 className="font-bold text-gray-800 dark:text-white mb-1">{location.name}</h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">{location.address}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-emerald-600 font-semibold">
+                    <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
                       {location.price_min === 0 ? 'Miễn phí' : `${(location.price_min / 1000).toFixed(0)}K VNĐ`}
                     </span>
-                    <span className="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-xs">
+                    <span className="bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400 px-2 py-0.5 rounded-full text-xs">
                       Điểm {index + 1}
                     </span>
                   </div>

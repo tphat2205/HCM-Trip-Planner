@@ -71,3 +71,31 @@ html {
     display: none !important;
   }
 }
+
+/* =========================================
+   DARK MODE CHO LEAFLET MAP
+   ========================================= */
+
+/* 1. Đảo màu ảnh nền bản đồ (Tiles) thành tone tối */
+.dark .leaflet-layer,
+.dark .leaflet-control-zoom-in,
+.dark .leaflet-control-zoom-out,
+.dark .leaflet-control-attribution {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+/* 2. Đổi nền của Popup Leaflet sang màu tối */
+.dark .leaflet-popup-content-wrapper,
+.dark .leaflet-popup-tip {
+  background-color: #1f2937; /* Tương đương dark:bg-gray-800 */
+  color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+/* 3. Chỉnh màu nút X đóng popup */
+.dark .leaflet-popup-close-button {
+  color: #9ca3af !important; /* Tương đương text-gray-400 */
+}
+.dark .leaflet-popup-close-button:hover {
+  color: #f87171 !important; /* Tương đương text-red-400 */
+}

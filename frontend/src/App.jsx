@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import './App.css';
+import { useState, useEffect } from 'react';
 import { Plane, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Navigation, Info } from 'lucide-react';
+import { Navigation, Info, Sun, Moon } from 'lucide-react';
 import SearchBar from './components/SearchBar';
 import FilterPanel from './components/FilterPanel';
 import AboutModal from './components/AboutModal';
@@ -16,12 +17,35 @@ function App() {
   const [selectedLocations, setSelectedLocations] = useState([]); 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCity, setSelectedCity] = useState('Ho Chi Minh');
   const [filters, setFilters] = useState({
     districts: [],
     minPrice: null,
     maxPrice: null,
   });
+
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        return savedTheme === 'dark';
+      }
+      // Nếu chưa từng cài đặt, tự động lấy theo giao diện máy tính của user
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (isDarkMode) {
+      root.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      root.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
 
   const handleFiltersChange = (newFilters) => {
     setFilters(newFilters);
@@ -98,7 +122,14 @@ function App() {
               <span className="hidden sm:inline">Về dự án</span>
             </button>
 
-            {/* Dành chỗ cho Nút Dark Mode (sẽ thêm sau) */}
+            {/* Nút chuyển đổi Dark/Light Mode */}
+            <button
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className="p-2 text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-full transition-colors"
+              title={isDarkMode ? "Chuyển sang chế độ Sáng" : "Chuyển sang chế độ Tối"}
+            >
+              {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
           </div>
         </div>
       </header>
