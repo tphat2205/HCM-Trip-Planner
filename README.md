@@ -1,26 +1,26 @@
-# 🇻🇳 Vietnam Travel Planner
+# Vietnam Travel Planner
 
 **Hệ thống tư vấn du lịch TP. Hồ Chí Minh.**
 
-Ứng dụng web giúp du khách tìm kiếm và lên kế hoạch du lịch thông minh bằng cách nhập yêu cầu bằng ngôn ngữ tự nhiên tiếng Việt. Hệ thống sử dụng pipeline ML hai giai đoạn (Content-Based Filtering + XGBoost Ranker) để gợi ý khách sạn, quán ăn và điểm tham quan phù hợp nhất.
+Ứng dụng web giúp du khách tìm kiếm và lên kế hoạch du lịch bằng cách nhập yêu cầu bằng ngôn ngữ tự nhiên tiếng Việt. Hệ thống sử dụng pipeline ML hai giai đoạn (Content-Based Filtering + XGBoost Ranker) để gợi ý khách sạn, quán ăn và điểm tham quan phù hợp nhất.
+
+**Live Demo:** [hcm-trip-planner.vercel.app](https://hcm-trip-planner.vercel.app)
 
 ---
 
-## 📋 Mục lục
+## Mục lục
 
-- [Tính năng](#-tính-năng)
-- [Kiến trúc hệ thống](#-kiến-trúc-hệ-thống)
-- [ML Pipeline](#-ml-pipeline)
-- [Tech Stack](#-tech-stack)
-- [Cấu trúc thư mục](#-cấu-trúc-thư-mục)
-- [Cài đặt và chạy](#-cài-đặt-và-chạy)
-- [API Reference](#-api-reference)
-- [Biến môi trường](#-biến-môi-trường)
-- [Triển khai với Docker](#-triển-khai-với-docker)
+- [Tính năng](#tính-năng)
+- [Kiến trúc hệ thống](#kiến-trúc-hệ-thống)
+- [ML Pipeline](#ml-pipeline)
+- [Tech Stack](#tech-stack)
+- [Cấu trúc thư mục](#cấu-trúc-thư-mục)
+- [API Reference](#api-reference)
+- [Triển khai](#triển-khai)
 
 ---
 
-## ✨ Tính năng
+## Tính năng
 
 ### Tìm kiếm thông minh
 
@@ -37,7 +37,7 @@
 ### Trực quan hóa kết quả
 
 - **Thẻ địa điểm (ResultCard)**: Hiển thị hình ảnh, đánh giá, giá, giờ hoạt động, link gốc
-- **Badge phân loại màu sắc**: 🔵 Khách sạn · 🟠 Quán ăn · 🟣 Điểm tham quan
+- **Badge phân loại màu sắc**: Khách sạn (xanh dương) · Quán ăn (cam) · Điểm tham quan (tím)
 - **Skeleton Loading**: Hiệu ứng tải mượt mà khi đang xử lý
 
 ### Bản đồ tương tác
@@ -60,13 +60,14 @@
 
 ---
 
-## 🏗 Kiến trúc hệ thống
+## Kiến trúc hệ thống
 
 ```
 ┌─────────────────┐         HTTP/JSON          ┌─────────────────────┐
 │                 │ ◄──────────────────────────►│                     │
 │   React + Vite  │    GET /api/recommend       │   FastAPI Backend   │
 │   (Frontend)    │    GET /api/weather          │   (Python 3.12)     │
+│   Vercel        │                              │   Render            │
 │                 │                              │                     │
 │  • SearchBar    │                              │  • Routers          │
 │  • FilterPanel  │                              │  • Services         │
@@ -84,7 +85,7 @@
 
 ---
 
-## 🤖 ML Pipeline
+## ML Pipeline
 
 Khi người dùng gửi truy vấn, hệ thống thực hiện pipeline suy luận **4 giai đoạn**:
 
@@ -116,11 +117,11 @@ Chọn **1 khách sạn + 2 quán ăn + 3 điểm tham quan** tốt nhất. Pena
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Backend
 
-| Công nghệ    | Phiên bản | Mục đích                        |
+| Công nghệ   | Phiên bản | Mục đích                        |
 | ------------ | --------- | ------------------------------- |
 | FastAPI      | 0.135.2   | REST API framework              |
 | Uvicorn      | 0.42.0    | ASGI server                     |
@@ -134,7 +135,7 @@ Chọn **1 khách sạn + 2 quán ăn + 3 điểm tham quan** tốt nhất. Pena
 
 ### Frontend
 
-| Công nghệ     | Phiên bản | Mục đích                  |
+| Công nghệ    | Phiên bản | Mục đích                  |
 | ------------- | --------- | ------------------------- |
 | React         | 19.2.4    | UI framework              |
 | Vite          | 8.0.1     | Build tool & dev server   |
@@ -148,14 +149,16 @@ Chọn **1 khách sạn + 2 quán ăn + 3 điểm tham quan** tốt nhất. Pena
 
 ### DevOps
 
-| Công nghệ      | Mục đích                    |
+| Công nghệ     | Mục đích                    |
 | -------------- | --------------------------- |
 | Docker         | Containerization            |
 | Docker Compose | Multi-service orchestration |
+| Render         | Backend hosting             |
+| Vercel         | Frontend hosting            |
 
 ---
 
-## 📂 Cấu trúc thư mục
+## Cấu trúc thư mục
 
 ```
 TripPlanner/
@@ -213,76 +216,9 @@ TripPlanner/
 
 ---
 
-## 🚀 Cài đặt và chạy
+## API Reference
 
-### Yêu cầu hệ thống
-
-- **Python** 3.12+
-- **Node.js** 18+
-- **npm** 9+
-
-### 1. Clone repository
-
-```bash
-git clone https://github.com/tphat2205/HCM-Trip-Planner.git
-cd HCM-Trip-Planner
-```
-
-### 2. Cài đặt và chạy Backend
-
-```bash
-# Di chuyển vào thư mục backend
-cd backend
-
-# Tạo virtual environment
-python -m venv venv
-
-# Kích hoạt virtual environment
-# Windows:
-venv\Scripts\activate
-# macOS/Linux:
-source venv/bin/activate
-
-# Cài đặt dependencies
-pip install -r requirements.txt
-
-# Tạo file .env từ template
-cp .env.example .env
-# Chỉnh sửa .env nếu cần (thêm OPENWEATHERMAP_API_KEY)
-
-# Chạy server
-python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-Server sẽ khởi động tại `http://localhost:8000`. Truy cập `http://localhost:8000/docs` để xem Swagger UI.
-
-### 3. Cài đặt và chạy Frontend
-
-```bash
-# Mở terminal mới, di chuyển vào thư mục frontend
-cd frontend
-
-# Cài đặt dependencies
-npm install
-
-# Chạy dev server
-npm run dev
-```
-
-Frontend sẽ chạy tại `http://localhost:5173`.
-
-### 4. Sử dụng
-
-1. Mở trình duyệt tại `http://localhost:5173`
-2. Nhập yêu cầu vào thanh tìm kiếm (ví dụ: _"Khách sạn yên tĩnh"_)
-3. _(Tùy chọn)_ Mở bộ lọc để chọn quận/huyện hoặc đặt ngân sách
-4. Nhấn Enter hoặc nhấp nút gợi ý nhanh
-5. Xem kết quả → nhấp "Thêm vào" để đánh dấu địa điểm lên bản đồ
-6. Bật hiển thị lộ trình hoặc xem ước tính ngân sách trên bản đồ
-
----
-
-## 📡 API Reference
+Base URL: `https://<render-backend-url>`
 
 ### `GET /health`
 
@@ -304,11 +240,12 @@ Health check endpoint.
 Lấy gợi ý địa điểm du lịch.
 
 **Parameters:**
-| Param | Type | Required | Description |
-|---|---|---|---|
-| `query` | string | ✅ | Truy vấn ngôn ngữ tự nhiên (1-500 ký tự) |
-| `districts` | string | ❌ | Danh sách quận, phân cách bởi dấu phẩy |
-| `max_price` | float | ❌ | Ngân sách tối đa (VNĐ, ≥ 0) |
+
+| Param       | Type   | Required | Description                                  |
+| ----------- | ------ | -------- | -------------------------------------------- |
+| `query`     | string | Yes      | Truy vấn ngôn ngữ tự nhiên (1-500 ký tự)    |
+| `districts` | string | No       | Danh sách quận, phân cách bởi dấu phẩy      |
+| `max_price` | float  | No       | Ngân sách tối đa (VNĐ, >= 0)                |
 
 **Ví dụ:**
 
@@ -339,8 +276,8 @@ GET /api/recommend?query=khách sạn đẹp&districts=Quận 1,Quận 3&max_pri
       "lng": 106.7009
     }
   ],
-  "restaurants": [...],
-  "attractions": [...],
+  "restaurants": [],
+  "attractions": [],
   "warning": "Thỏa mãn toàn bộ tiêu chí tìm kiếm.",
   "total_places": 6,
   "estimated_budget": 1500000
@@ -366,9 +303,10 @@ Cùng chức năng với GET, nhận JSON body thay vì query params.
 Lấy thông tin thời tiết hiện tại.
 
 **Parameters:**
-| Param | Type | Required | Description |
-|---|---|---|---|
-| `city` | string | ❌ | Tên thành phố (mặc định: "Ho Chi Minh City") |
+
+| Param  | Type   | Required | Description                                   |
+| ------ | ------ | -------- | --------------------------------------------- |
+| `city` | string | No       | Tên thành phố (mặc định: "Ho Chi Minh City")  |
 
 **Response:**
 
@@ -390,58 +328,28 @@ Lấy thông tin thời tiết hiện tại.
 
 ---
 
-## 🔐 Biến môi trường
+## Triển khai
 
-Tạo file `backend/.env` từ template `backend/.env.example`:
+Ứng dụng được triển khai trên hai nền tảng:
 
-```env
-# Chế độ debug (True cho development, False cho production)
-DEBUG=True
+| Thành phần | Nền tảng | URL                                                              |
+| ---------- | -------- | ---------------------------------------------------------------- |
+| Frontend   | Vercel   | [hcm-trip-planner.vercel.app](https://hcm-trip-planner.vercel.app) |
+| Backend    | Render   | Swagger UI tại `/docs`                                           |
 
-# Cấu hình server
-HOST=0.0.0.0
-PORT=8000
+### Biến môi trường (Backend)
 
-# OpenWeatherMap API Key (miễn phí tại https://openweathermap.org/api)
-# Để trống nếu không cần tính năng thời tiết
-OPENWEATHERMAP_API_KEY=your_api_key_here
-```
+| Biến                       | Mô tả                                         | Mặc định    |
+| -------------------------- | ---------------------------------------------- | ----------- |
+| `DEBUG`                    | Chế độ debug (True/False)                      | `True`      |
+| `HOST`                     | Host server                                    | `0.0.0.0`   |
+| `PORT`                     | Port server                                    | `8000`      |
+| `OPENWEATHERMAP_API_KEY`   | API key từ OpenWeatherMap (để trống nếu không cần) | _(trống)_ |
 
-Frontend sử dụng biến `VITE_API_URL` (mặc định: `http://localhost:8000/api`).
-
----
-
-## 🐳 Triển khai với Docker
-
-### Chạy backend với Docker Compose
-
-```bash
-# Build và chạy
-docker-compose up --build
-
-# Chạy ở background
-docker-compose up -d --build
-
-# Xem logs
-docker-compose logs -f backend
-
-# Dừng
-docker-compose down
-```
-
-Backend sẽ chạy tại `http://localhost:8000`.
-
-### Chi tiết Docker
-
-- **Base image**: `python:3.12-slim`
-- **Volumes**: `artifacts/` (ML models) và `public/` (geocoding data) được mount từ host
-- **Health check**: Kiểm tra `/health` mỗi 30 giây
-- **Restart policy**: `unless-stopped`
+Frontend sử dụng biến `VITE_API_URL` trỏ tới backend URL (mặc định: `http://localhost:8000/api`).
 
 ---
 
-## 📄 License
+## License
 
 Dự án này được phát triển cho mục đích học thuật.
-
----
