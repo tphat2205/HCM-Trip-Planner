@@ -1,19 +1,19 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Search, Loader2, X } from 'lucide-react';
+import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { Search, Loader2, X } from "lucide-react";
 
 const TYPING_EXAMPLES = [
-  'Tìm khách sạn gần Quận 1, không gian yên tĩnh...',
-  'Quán ăn ngon, không gian lãng mạn...',
-  'Địa điểm vui chơi cho gia đình...',
-  'Spa thư giãn, dịch vụ tốt...',
-  'Nhà hàng hải sản, giá bình dân...',
-  'Quán cà phê view đẹp, yên tĩnh...',
+  "Tìm khách sạn gần Quận 1, không gian yên tĩnh...",
+  "Quán ăn ngon, không gian lãng mạn...",
+  "Địa điểm vui chơi cho gia đình...",
+  "Spa thư giãn, dịch vụ tốt...",
+  "Nhà hàng hải sản, giá bình dân...",
+  "Quán cà phê view đẹp, yên tĩnh...",
 ];
 
 export default function SearchBar({ onSearch, isLoading, filterNode }) {
-  const [query, setQuery] = useState('');
-  const [typingText, setTypingText] = useState('');
+  const [query, setQuery] = useState("");
+  const [typingText, setTypingText] = useState("");
   const [typingIndex, setTypingIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
@@ -24,7 +24,7 @@ export default function SearchBar({ onSearch, isLoading, filterNode }) {
     if (query) return; // Stop typing animation when user types
 
     const currentExample = TYPING_EXAMPLES[typingIndex];
-    
+
     if (isTyping) {
       if (charIndex < currentExample.length) {
         const timer = setTimeout(() => {
@@ -51,7 +51,7 @@ export default function SearchBar({ onSearch, isLoading, filterNode }) {
   }, [query, typingIndex, charIndex, isTyping]);
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       if (query.trim()) {
         onSearch(query.trim());
@@ -67,7 +67,7 @@ export default function SearchBar({ onSearch, isLoading, filterNode }) {
   };
 
   const clearQuery = () => {
-    setQuery('');
+    setQuery("");
     inputRef.current?.focus();
   };
 
@@ -87,18 +87,18 @@ export default function SearchBar({ onSearch, isLoading, filterNode }) {
               <Search className="h-5 w-5 text-gray-400" />
             )}
           </div>
-          
+
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder={typingText || 'Nhập yêu cầu của bạn...'}
+            placeholder={typingText || "Nhập yêu cầu của bạn..."}
             onKeyDown={handleKeyDown}
-            className="w-full pl-12 pr-32 py-4 text-lg text-gray-900 dark:text-white bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-2xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 outline-none transition-all shadow-lg hover:shadow-xl"
+            className="w-full pl-12 pr-32 py-4 text-lg text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300/80 dark:border-gray-600/60 rounded-2xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 outline-none transition-all shadow-xl shadow-gray-300/40 dark:shadow-black/30 hover:shadow-2xl"
             disabled={isLoading}
           />
-          
+
           <div className="absolute inset-y-0 right-0 flex items-center gap-2 pr-2">
             {query && (
               <motion.button
@@ -126,14 +126,17 @@ export default function SearchBar({ onSearch, isLoading, filterNode }) {
         transition={{ delay: 0.3 }}
       >
         <span className="text-sm text-gray-500">Ví dụ:</span>
-        {['Khách sạn yên tĩnh', 'Quán ăn ngon', 'Spa thư giãn', 'Cà phê view đẹp'].map((example, index) => (
+        {[
+          "Ăn cơm tấm, đi khách sạn sạch sẽ và đi mua sắm",
+          "Ăn đồ hàn, đi Spa thư giãn, đi khách sạn view gần sông",
+        ].map((example, index) => (
           <motion.button
             key={example}
             onClick={() => {
               setQuery(example);
               onSearch(example);
             }}
-            className="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors"
+            className="px-3 py-1 text-sm bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors shadow-sm border border-gray-200/60 dark:border-gray-700/60"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4 + index * 0.1 }}

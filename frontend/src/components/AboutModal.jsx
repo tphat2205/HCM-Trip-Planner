@@ -13,7 +13,7 @@ export default function AboutModal({ isOpen, onClose }) {
     {
       step: '2',
       title: 'Trích xuất ứng viên',
-      desc: 'TF-IDF vector hóa truy vấn và tính cosine similarity với 500+ hồ sơ địa điểm.',
+      desc: 'TF-IDF vector hóa truy vấn và tính cosine similarity với 100 hồ sơ địa điểm.',
     },
     {
       step: '3',
@@ -75,7 +75,7 @@ export default function AboutModal({ isOpen, onClose }) {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-[5000] bg-gray-50 dark:bg-gray-900 overflow-y-auto no-scrollbar"
+        className="fixed inset-0 z-5000 bg-gray-50 dark:bg-gray-900 overflow-y-auto no-scrollbar"
         initial={{ opacity: 0, y: '100%' }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: '100%' }}
@@ -102,7 +102,7 @@ export default function AboutModal({ isOpen, onClose }) {
               <Plane className="h-10 w-10 text-emerald-600 dark:text-emerald-400" />
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
-              <span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
                 Vietnam Travel Planner
               </span>
             </h1>
@@ -173,7 +173,7 @@ export default function AboutModal({ isOpen, onClose }) {
 
           {/* Tech Stack */}
           <motion.section
-            className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/10 dark:to-teal-900/10 p-8 sm:p-12 rounded-3xl border border-emerald-100 dark:border-emerald-900/30"
+            className="bg-linear-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/10 dark:to-teal-900/10 p-8 sm:p-12 rounded-3xl border border-emerald-100 dark:border-emerald-900/30"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
@@ -211,7 +211,7 @@ export default function AboutModal({ isOpen, onClose }) {
             </div>
             <p className="text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
               Hiện tại hệ thống tập trung vào khu vực <strong className="text-gray-800 dark:text-gray-200">TP. Hồ Chí Minh</strong> với 
-              hơn 500 địa điểm bao gồm khách sạn, nhà hàng, quán ăn, điểm tham quan,
+              hơn 5000 địa điểm bao gồm khách sạn, nhà hàng, quán ăn, điểm tham quan,
               spa và nhiều loại hình dịch vụ du lịch khác.
             </p>
           </motion.section>

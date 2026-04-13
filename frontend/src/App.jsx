@@ -98,10 +98,10 @@ function App() {
   ] : [];
 
   return (
-    <div className="h-screen w-screen overflow-hidden bg-[#F8FAFC] dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300 flex flex-col">
+    <div className="h-screen w-screen overflow-hidden bg-[#E8ECF2] dark:bg-[#0B1120] text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300 flex flex-col">
       
       {/* HEADER */}
-      <header className="shrink-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+      <header className="shrink-0 z-50 bg-white dark:bg-gray-900 backdrop-blur-md border-b border-gray-200/80 dark:border-gray-700/60 shadow-sm dark:shadow-gray-950/50">
         <div className="w-full px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="bg-emerald-500 p-2 rounded-xl text-white shadow-lg shadow-emerald-500/30">
@@ -175,7 +175,7 @@ function App() {
 
             {!isLoading && allResults.length === 0 && (
               <motion.div
-                className={`relative rounded-2xl overflow-hidden shadow-lg bg-gray-100 dark:bg-gray-800 h-full`}
+                className={`relative rounded-2xl overflow-hidden shadow-lg bg-white dark:bg-gray-800/80 border border-gray-200/60 dark:border-gray-700/50 h-full`}
                 layout
               >
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -225,7 +225,7 @@ function App() {
         </div>
 
         {/* ================= CỘT PHẢI: Bản Đồ ================= */}
-        <div className="w-full lg:w-1/2 h-full relative z-10 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="w-full lg:w-1/2 h-full relative z-10 rounded-2xl shadow-xl shadow-gray-400/20 dark:shadow-black/40 border border-gray-200/80 dark:border-gray-700/50 overflow-hidden">
           {/* Truyền selectedLocations vào để chỉ rải marker những cái được chọn */}
           <TravelMap
             locations={selectedLocations} 

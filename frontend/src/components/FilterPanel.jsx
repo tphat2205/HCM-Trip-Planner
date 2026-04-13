@@ -81,7 +81,7 @@ export default function FilterPanel({ onFiltersChange, isLoading }) {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="absolute top-[calc(100%+16px)] right-0 z-2000 w-[calc(100vw-32px)] sm:w-125 p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 cursor-default"
+            className="absolute top-[calc(100%+16px)] right-0 z-2000 w-[calc(100vw-32px)] sm:w-125 p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl shadow-gray-400/30 dark:shadow-black/50 border border-gray-200/80 dark:border-gray-600/50 cursor-default"
             initial={{ opacity: 0, y: -10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
