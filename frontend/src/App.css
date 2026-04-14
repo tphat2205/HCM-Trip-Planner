@@ -1,5 +1,12 @@
 /* App.css - Custom styles for Vietnam Travel Planner */
 
+/* Grid rows stretch to fill available height on large screens */
+@media (min-width: 1024px) {
+  .grid-rows-fill {
+    grid-auto-rows: 1fr;
+  }
+}
+
 /* Leaflet map custom marker fix */
 .custom-marker {
   background: transparent;

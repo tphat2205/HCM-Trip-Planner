@@ -72,7 +72,7 @@ export default function SearchBar({ onSearch, isLoading, filterNode }) {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto relative z-50">
+    <div className="w-full max-w-3xl mx-auto relative z-50 px-1 sm:px-0">
       <form onSubmit={handleSubmit}>
         <motion.div
           className="relative flex items-center"
@@ -95,7 +95,7 @@ export default function SearchBar({ onSearch, isLoading, filterNode }) {
             onChange={(e) => setQuery(e.target.value)}
             placeholder={typingText || "Nhập yêu cầu của bạn..."}
             onKeyDown={handleKeyDown}
-            className="w-full pl-12 pr-32 py-4 text-lg text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300/80 dark:border-gray-600/60 rounded-2xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 outline-none transition-all shadow-xl shadow-gray-300/40 dark:shadow-black/30 hover:shadow-2xl"
+            className="w-full pl-10 sm:pl-12 pr-24 sm:pr-32 py-3 sm:py-4 text-base sm:text-lg text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-300/80 dark:border-gray-600/60 rounded-2xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 outline-none transition-all shadow-xl shadow-gray-300/40 dark:shadow-black/30 hover:shadow-2xl"
             disabled={isLoading}
           />
 
@@ -136,7 +136,7 @@ export default function SearchBar({ onSearch, isLoading, filterNode }) {
               setQuery(example);
               onSearch(example);
             }}
-            className="px-3 py-1 text-sm bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors shadow-sm border border-gray-200/60 dark:border-gray-700/60"
+            className="px-2 sm:px-3 py-1 text-xs sm:text-sm bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors shadow-sm border border-gray-200/60 dark:border-gray-700/60"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4 + index * 0.1 }}

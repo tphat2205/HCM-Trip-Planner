@@ -98,7 +98,7 @@ function App() {
   ] : [];
 
   return (
-    <div className="h-screen w-screen overflow-hidden bg-[#E8ECF2] dark:bg-[#0B1120] text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300 flex flex-col">
+    <div className="min-h-screen w-full bg-[#E8ECF2] dark:bg-[#0B1120] text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300 flex flex-col lg:h-screen lg:overflow-hidden">
       
       {/* HEADER */}
       <header className="shrink-0 z-50 bg-white dark:bg-gray-900 backdrop-blur-md border-b border-gray-200/80 dark:border-gray-700/60 shadow-sm dark:shadow-gray-950/50">
@@ -135,10 +135,10 @@ function App() {
       </header>
 
       {/* MAIN CONTENT */}
-      <main className="flex-1 w-full px-4 py-4 flex flex-col lg:flex-row gap-4 overflow-hidden">
+      <main className="flex-1 w-full px-3 sm:px-4 py-3 sm:py-4 flex flex-col lg:flex-row gap-3 sm:gap-4 overflow-y-auto lg:overflow-hidden">
         
         {/* ================= CỘT TRÁI: Tìm kiếm + Kết quả ================= */}
-        <div className="w-full lg:w-1/2 flex flex-col gap-4 h-full overflow-hidden">
+        <div className="w-full lg:w-1/2 flex flex-col gap-3 sm:gap-4 lg:h-full lg:overflow-hidden order-1">
           
           {/* Vùng Search cố định */}
           <div className="shrink-0 space-y-4">
@@ -158,10 +158,10 @@ function App() {
           </div>
 
           {/* Vùng danh sách */}
-          <div className="flex-1 overflow-hidden flex flex-col pb-2">
+          <div className="lg:flex-1 lg:min-h-0 lg:overflow-hidden flex flex-col pb-2">
             {isLoading && (
-              <div className="h-full flex flex-col">
-                <div className="grid grid-cols-3 gap-3 h-full">
+              <div className="lg:flex-1 lg:min-h-0 lg:overflow-y-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 lg:h-full grid-rows-fill">
                   {[1, 2, 3, 4, 5, 6].map(i => <ResultCardSkeleton key={i} index={i} />)}
                 </div>
               </div>
@@ -175,7 +175,7 @@ function App() {
 
             {!isLoading && allResults.length === 0 && (
               <motion.div
-                className={`relative rounded-2xl overflow-hidden shadow-lg bg-white dark:bg-gray-800/80 border border-gray-200/60 dark:border-gray-700/50 h-full`}
+                className={`relative rounded-2xl overflow-hidden shadow-lg bg-white dark:bg-gray-800/80 border border-gray-200/60 dark:border-gray-700/50 min-h-50 lg:flex-1`}
                 layout
               >
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -188,8 +188,8 @@ function App() {
             )}
 
             {!isLoading && allResults.length > 0 && (
-              <section className="h-full flex flex-col">
-                <div className="flex items-center justify-between mb-3 shrink-0">
+              <section className="lg:flex-1 lg:min-h-0 flex flex-col">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 shrink-0 gap-2">
                   <div className="flex items-center gap-2">
                     <h2 className="text-lg font-bold text-gray-800 dark:text-white">
                       Gợi ý phù hợp nhất
@@ -207,17 +207,19 @@ function App() {
                   )}
                 </div>
 
-                <div className="grid grid-cols-3 gap-3 h-full">
-                  {allResults.map((location, index) => (
-                    <ResultCard
-                      key={location.id}
-                      location={location}
-                      // Bật lại chức năng chọn bằng hàm Toggle
-                      onAddToTrip={() => handleToggleLocation(location)} 
-                      isInTrip={selectedLocations.some(item => item.id === location.id)}
-                      index={index}
-                    />
-                  ))}
+                <div className="lg:flex-1 lg:min-h-0 lg:overflow-y-auto lg:pr-1 pb-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 lg:h-full grid-rows-fill">
+                    {allResults.map((location, index) => (
+                      <ResultCard
+                        key={location.id}
+                        location={location}
+                        // Bật lại chức năng chọn bằng hàm Toggle
+                        onAddToTrip={() => handleToggleLocation(location)} 
+                        isInTrip={selectedLocations.some(item => item.id === location.id)}
+                        index={index}
+                      />
+                    ))}
+                  </div>
                 </div>
               </section>
             )}
@@ -225,7 +227,7 @@ function App() {
         </div>
 
         {/* ================= CỘT PHẢI: Bản Đồ ================= */}
-        <div className="w-full lg:w-1/2 h-full relative z-10 rounded-2xl shadow-xl shadow-gray-400/20 dark:shadow-black/40 border border-gray-200/80 dark:border-gray-700/50 overflow-hidden">
+        <div className="w-full lg:w-1/2 h-[40vh] sm:h-[50vh] lg:h-full relative z-10 rounded-2xl shadow-xl shadow-gray-400/20 dark:shadow-black/40 border border-gray-200/80 dark:border-gray-700/50 overflow-hidden shrink-0 order-2">
           {/* Truyền selectedLocations vào để chỉ rải marker những cái được chọn */}
           <TravelMap
             locations={selectedLocations} 

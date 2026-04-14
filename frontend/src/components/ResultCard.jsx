@@ -103,7 +103,7 @@ export default function ResultCard({ location, onAddToTrip, isInTrip, index }) {
       <div className={`h-1 w-full bg-linear-to-r ${theme.topBar}`} />
 
       {/* Image */}
-      <div className="relative h-46 overflow-hidden">
+      <div className="relative h-36 sm:h-40 lg:h-44 overflow-hidden">
         <motion.img
           src={imageUrl}
           alt={location.name}
@@ -146,12 +146,12 @@ export default function ResultCard({ location, onAddToTrip, isInTrip, index }) {
       </div>
 
       {/* Content */}
-      <div className="p-4 flex-1 flex flex-col">
-        <h3 className="text-base font-bold text-gray-800 dark:text-white mb-2 line-clamp-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+      <div className="p-3 sm:p-4 flex-1 flex flex-col">
+        <h3 className="text-sm sm:text-base font-bold text-gray-800 dark:text-white mb-1.5 sm:mb-2 line-clamp-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
           {location.name}
         </h3>
 
-        <div className="flex items-start gap-2 text-gray-500 dark:text-gray-400 text-sm mb-2">
+        <div className="flex items-start gap-1.5 sm:gap-2 text-gray-500 dark:text-gray-400 text-xs sm:text-sm mb-1.5 sm:mb-2">
           <MapPin className="h-4 w-4 shrink-0 mt-0.5" />
           <span className="line-clamp-1">{location.address}</span>
         </div>
@@ -160,7 +160,7 @@ export default function ResultCard({ location, onAddToTrip, isInTrip, index }) {
         {(location.start_time || location.end_time) &&
           location.start_time !== "-" &&
           location.end_time !== "-" && (
-            <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 text-sm mb-2">
+            <div className="flex items-center gap-1.5 sm:gap-2 text-gray-500 dark:text-gray-400 text-xs sm:text-sm mb-1.5 sm:mb-2">
               <Clock className="h-4 w-4 shrink-0" />
               <span>
                 {location.start_time} - {location.end_time}
@@ -178,10 +178,10 @@ export default function ResultCard({ location, onAddToTrip, isInTrip, index }) {
         <div className="flex-1" />
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-700/50">
+        <div className="flex flex-wrap items-center justify-between gap-2 pt-2 sm:pt-3 border-t border-gray-100 dark:border-gray-700/50">
           <div className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
             <Banknote className="h-4 w-4" />
-            <span className="font-bold text-sm">
+            <span className="font-bold text-xs sm:text-sm">
               {formatPrice(location.price_min)}
             </span>
             {location.price_max > location.price_min && (
@@ -209,7 +209,7 @@ export default function ResultCard({ location, onAddToTrip, isInTrip, index }) {
 
             <motion.button
               onClick={() => onAddToTrip(location)}
-              className={`flex items-center gap-1 px-3 py-2 rounded-xl font-medium text-sm transition-all ${
+              className={`flex items-center gap-1 px-2 sm:px-3 py-1.5 sm:py-2 rounded-xl font-medium text-xs sm:text-sm transition-all ${
                 isInTrip
                   ? "bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 ring-1 ring-emerald-300 dark:ring-emerald-700"
                   : "bg-gray-100 dark:bg-gray-700/80 text-gray-600 dark:text-gray-300 hover:bg-emerald-500 hover:text-white hover:shadow-lg hover:shadow-emerald-500/25"
@@ -219,13 +219,15 @@ export default function ResultCard({ location, onAddToTrip, isInTrip, index }) {
             >
               {isInTrip ? (
                 <>
-                  <Check className="h-4 w-4" />
-                  Đã thêm
+                  <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Đã thêm</span>
+                  <span className="sm:hidden">✓</span>
                 </>
               ) : (
                 <>
-                  <Plus className="h-4 w-4" />
-                  Thêm vào
+                  <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Thêm vào</span>
+                  <span className="sm:hidden">+</span>
                 </>
               )}
             </motion.button>
